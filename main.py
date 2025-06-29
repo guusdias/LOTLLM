@@ -7,7 +7,7 @@ from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
-# Carregar variáveis de ambiente
+
 load_dotenv()
 
 def get_neo4j_connection():
@@ -76,7 +76,7 @@ def run_cypher_query(question, graph, cypher_chain):
         cypher_query = cypher_chain.invoke({"question": question})
         print(f"Cypher gerado: {cypher_query}")
 
-        # Limpar formatação de código se presente
+        
         if cypher_query.startswith("```cypher"):
             cypher_query = cypher_query.replace("```cypher", "", 1)
         if cypher_query.endswith("```"):
