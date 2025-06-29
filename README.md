@@ -1,107 +1,96 @@
-# Sistema de Perguntas e Respostas - Senhor dos Anéis
+# Lord of the Rings - Knowledge Graph Frontend
 
-Este projeto implementa um sistema de perguntas e respostas baseado em um grafo de conhecimento do Senhor dos Anéis, utilizando Neo4j e Google Gemini.
+Uma interface web moderna para consultar o grafo de conhecimento do Senhor dos Anéis usando linguagem natural.
 
-## Configuração do Ambiente
+## Recursos
 
-### 1. Instalar Dependências
+- 🎨 **Interface Moderna**: Design temático do Senhor dos Anéis com cores douradas e visual elegante
+- 💬 **Chat Interativo**: Interface de conversação para fazer perguntas naturais
+- ⚡ **Consultas em Tempo Real**: Conecta com o backend Python + Neo4j + Gemini
+- 📊 **Estatísticas do Grafo**: Visualização de dados do banco de conhecimento
+- 📱 **Responsivo**: Funciona em desktop, tablet e mobile
+- 🔍 **Visualização de Cypher**: Mostra as consultas geradas automaticamente
 
-```bash
-pip install -r requirements.txt
-```
+## Tecnologias
 
-### 2. Configurar Variáveis de Ambiente
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Backend**: Flask + Python
+- **Banco de Dados**: Neo4j
+- **LLM**: Google Gemini via Langchain
+- **Styling**: CSS customizado com tema Lord of the Rings
 
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+## Como Usar
 
-```env
-# Configurações do Neo4j
-NEO4J_URI=neo4j+s://seu-database-id.databases.neo4j.io
-NEO4J_USER=neo4j
-NEO4J_PASSWORD=sua-senha-neo4j
+1. **Instalar dependências**:
 
-# Configurações do Google AI
-GOOGLE_API_KEY=sua-google-api-key
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-# Configurações do modelo (opcionais)
-GEMINI_MODEL=gemini-1.5-pro
-MODEL_TEMPERATURE=0.0
-```
+2. **Configurar variáveis de ambiente** (arquivo `.env`):
 
-**⚠️ IMPORTANTE**: Nunca commite o arquivo `.env` no controle de versão. Ele já está incluído no `.gitignore`.
+   ```
+   NEO4J_URI=bolt://localhost:7687
+   NEO4J_USER=neo4j
+   NEO4J_PASSWORD=sua_senha
+   GOOGLE_API_KEY=sua_chave_api
+   GEMINI_MODEL=gemini-1.5-pro
+   MODEL_TEMPERATURE=0.0
+   ```
 
-### 3. Obter Credenciais
+3. **Executar o servidor**:
 
-#### Neo4j
+   ```bash
+   python app.py
+   ```
 
-1. Acesse [Neo4j AuraDB](https://neo4j.com/cloud/aura/)
-2. Crie uma instância gratuita
-3. Copie a URI, usuário e senha para o arquivo `.env`
+4. **Acessar a interface**:
+   - Abrir http://localhost:5000 no navegador
 
-#### Google AI
+## Exemplos de Perguntas
 
-1. Acesse [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Crie uma API key
-3. Adicione a chave no arquivo `.env`
+- "List all characters who are Hobbits"
+- "Which characters appear in Fellowship of the Ring?"
+- "How many Elves are there?"
+- "Who are the members of the Fellowship?"
+- "What movies are in the database?"
 
-## Uso
-
-Execute o programa principal:
-
-```bash
-python main.py
-```
-
-O sistema irá:
-
-1. Conectar ao Neo4j
-2. Inicializar o modelo Gemini
-3. Aguardar suas perguntas
-
-### Exemplos de Perguntas
-
-- "Quais personagens estão nos filmes do Senhor dos Anéis?"
-- "Quantos hobbits existem no Senhor dos Anéis?"
-- "Quem é Galadriel?"
-
-Digite `exit` para sair do programa.
-
-## Estrutura do Projeto
+## Estrutura do Frontend
 
 ```
-langchain/
-├── main.py           # Código principal refatorado
-├── requirements.txt  # Dependências do projeto
-├── .env             # Variáveis de ambiente (não versionado)
-├── .gitignore       # Arquivos ignorados pelo Git
-├── README.md        # Este arquivo
-├── test.py          # Testes
-├── testai.py        # Testes de AI
-└── venv/            # Ambiente virtual (não versionado)
+frontend/
+├── index.html          # Página principal
+├── style.css           # Estilos CSS
+├── script.js           # Lógica JavaScript
+└── README.md           # Esta documentação
 ```
 
-## Melhorias Implementadas
+## APIs Disponíveis
 
-- ✅ Variáveis de ambiente para credenciais sensíveis
-- ✅ Estrutura modular com funções separadas
-- ✅ Tratamento de erros melhorado
-- ✅ Mensagens em português
-- ✅ `.gitignore` completo
-- ✅ Documentação
+- `GET /api/health` - Status da API
+- `GET /api/stats` - Estatísticas do grafo
+- `POST /api/query` - Processar pergunta
+- `GET /api/examples` - Perguntas de exemplo
+- `POST /api/reset` - Reinicializar sistema
+
+## Recursos Especiais
+
+- **Loading Animation**: Animação temática durante processamento
+- **Contador de Caracteres**: Limite de 500 caracteres por pergunta
+- **Histórico de Mensagens**: Mantém conversação completa
+- **Fallback**: Respostas simuladas se API falhar
+- **Easter Egg**: Código Konami para efeito especial! 🎮
+
+## Desenvolvimento
+
+Para modificar o frontend:
+
+1. Edite os arquivos em `frontend/`
+2. O servidor Flask serve automaticamente os arquivos estáticos
+3. Recarregue a página para ver as mudanças
 
 ## Troubleshooting
 
-### Erro de Conexão Neo4j
-
-- Verifique se as credenciais estão corretas no `.env`
-- Confirme se a instância Neo4j está ativa
-
-### Erro Google API
-
-- Verifique se a API key está válida
-- Confirme se a API do Gemini está habilitada
-
-### Erro de Dependências
-
-- Execute `pip install -r requirements.txt`
-- Verifique se está usando o ambiente virtual correto
+- **Erro de conexão**: Verifique se Neo4j está rodando
+- **API não responde**: Verifique as variáveis de ambiente
+- **Página não carrega**: Certifique-se que o Flask está rodando na porta 5000
