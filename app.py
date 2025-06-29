@@ -6,13 +6,11 @@ import json
 from datetime import datetime
 import traceback
 
-# Importar as funções do main.py
 from main import get_neo4j_connection, get_llm, create_cypher_chain, create_rag_chain, run_cypher_query
 
 app = Flask(__name__)
-CORS(app)  # Permitir CORS para todas as rotas
+CORS(app)  
 
-# Variáveis globais para armazenar as conexões
 graph = None
 llm = None
 cypher_chain = None
@@ -35,7 +33,6 @@ def initialize_system():
         print(f"Erro na inicialização: {e}")
         return False
 
-# Tentar inicializar o sistema na inicialização do Flask
 initialize_system()
 
 @app.route('/')
@@ -106,17 +103,14 @@ def query_knowledge_graph():
         
         start_time = time.time()
         
-        # Gerar consulta Cypher
         cypher_query = cypher_chain.invoke({"question": question})
         
-        # Limpar formatação de código se presente
         if cypher_query.startswith("```cypher"):
             cypher_query = cypher_query.replace("```cypher", "", 1)
         if cypher_query.endswith("```"):
             cypher_query = cypher_query[:-3]
         cypher_query = cypher_query.strip()
         
-        # Executar consulta e obter resposta
         response = rag_chain.invoke(question)
         
         processing_time = round(time.time() - start_time, 2)
@@ -195,7 +189,6 @@ def internal_error(error):
     return jsonify({'error': 'Erro interno do servidor'}), 500
 
 if __name__ == '__main__':
-    # Tentar várias portas se 5000 estiver ocupada
     ports_to_try = [9342]
     
     for port in ports_to_try:
@@ -206,10 +199,9 @@ if __name__ == '__main__':
             print(f"API Stats: http://localhost:{port}/api/stats")
             print("=" * 50)
             
-            # Executar em modo debug apenas em desenvolvimento
             debug_mode = os.getenv('FLASK_ENV') == 'development'
             app.run(host='0.0.0.0', port=port, debug=debug_mode)
-            break  # Se conseguiu iniciar, sai do loop
+            break  
         except OSError as e:
             if "Address already in use" in str(e):
                 print(f"Porta {port} já está em uso, tentando próxima...")

@@ -14,10 +14,8 @@ class LordOfTheRingsApp {
     }
 
     initializeEventListeners() {
-        // Enviar mensagem ao clicar no botão
         this.sendButton.addEventListener('click', () => this.sendMessage());
         
-        // Enviar mensagem ao pressionar Enter
         this.userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -25,10 +23,8 @@ class LordOfTheRingsApp {
             }
         });
         
-        // Contador de caracteres
         this.userInput.addEventListener('input', () => this.updateCharacterCount());
         
-        // Auto-resize do input
         this.userInput.addEventListener('input', () => this.autoResizeInput());
     }
 
@@ -52,16 +48,13 @@ class LordOfTheRingsApp {
         const message = this.userInput.value.trim();
         if (!message || this.isLoading) return;
 
-        // Adicionar mensagem do usuário
         this.addMessage('user', message);
         this.userInput.value = '';
         this.updateCharacterCount();
         
-        // Mostrar loading
         this.showLoading();
         
         try {
-            // Simular chamada para o backend
             const response = await this.queryKnowledgeGraph(message);
             this.addMessage('assistant', response.answer, response.cypher, response.processingTime);
         } catch (error) {
@@ -93,7 +86,6 @@ class LordOfTheRingsApp {
                 processingTime: data.processing_time
             };
         } catch (error) {
-            // Fallback para respostas simuladas se a API falhar
             console.warn('Falha na API, usando respostas simuladas:', error);
             await this.sleep(1500 + Math.random() * 1000);
             return this.generateMockResponse(question);
@@ -103,7 +95,6 @@ class LordOfTheRingsApp {
     generateMockResponse(question) {
         const lowerQuestion = question.toLowerCase();
         
-        // Respostas simuladas baseadas em padrões
         if (lowerQuestion.includes('hobbit')) {
             return {
                 answer: `Com base nos dados do grafo de conhecimento, encontrei os seguintes personagens Hobbits: Bilbo, Frodo, Merry (Meriadoc), Pippin (Peregrin), Sam (Samwise), Rosie, Gaffer, Deagol, Farmer Maggot, entre outros. Os Hobbits são uma das raças mais importantes na história do Senhor dos Anéis, conhecidos por sua hospitalidade e coragem inesperada.`,
@@ -144,7 +135,6 @@ class LordOfTheRingsApp {
             };
         }
         
-        // Resposta padrão
         return {
             answer: `Interessante pergunta sobre Middle-earth! Infelizmente, não tenho informações específicas sobre "${question}" no meu grafo de conhecimento atual. Tente perguntar sobre personagens específicos, raças (Hobbits, Elfos, Anões), ou eventos da história do Senhor dos Anéis.`,
             cypher: `// Consulta não mapeada para: ${question}`,
@@ -153,7 +143,6 @@ class LordOfTheRingsApp {
     }
 
     addMessage(sender, content, cypher = null, processingTime = null, isError = false) {
-        // Remover mensagem de boas-vindas se ainda estiver presente
         const welcomeMessage = this.chatMessages.querySelector('.welcome-message');
         if (welcomeMessage) {
             welcomeMessage.remove();
@@ -173,7 +162,6 @@ class LordOfTheRingsApp {
         bubbleDiv.textContent = content;
         messageDiv.appendChild(bubbleDiv);
         
-        // Adicionar informações extras para respostas do assistente
         if (sender === 'assistant' && !isError) {
             const infoDiv = document.createElement('div');
             infoDiv.className = 'message-info';
@@ -194,7 +182,6 @@ class LordOfTheRingsApp {
         this.chatMessages.appendChild(messageDiv);
         this.scrollToBottom();
         
-        // Adicionar ao histórico
         this.messageHistory.push({
             sender,
             content,
@@ -233,20 +220,17 @@ class LordOfTheRingsApp {
                 document.getElementById('totalCharacters').textContent = data.total_characters || '-';
                 document.getElementById('totalMovies').textContent = data.total_movies || '-';
             } else {
-                // Fallback para valores padrão
                 document.getElementById('totalCharacters').textContent = '847';
                 document.getElementById('totalMovies').textContent = '3';
             }
         } catch (error) {
             console.warn('Erro ao carregar estatísticas:', error);
-            // Fallback para valores padrão
             document.getElementById('totalCharacters').textContent = '847';
             document.getElementById('totalMovies').textContent = '3';
         }
     }
 }
 
-// Função global para exemplos
 function askExample(question) {
     const app = window.lotrApp;
     if (app) {
@@ -255,11 +239,9 @@ function askExample(question) {
     }
 }
 
-// Inicializar aplicação quando DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
     window.lotrApp = new LordOfTheRingsApp();
     
-    // Easter egg: Konami code
     let konamiCode = '';
     const konamiSequence = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightKeyBKeyA';
     
@@ -284,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Adicionar animação de rotação para o easter egg
 const style = document.createElement('style');
 style.textContent = `
     @keyframes spin {
