@@ -45,7 +45,7 @@ Uma interface web moderna para consultar o grafo de conhecimento do Senhor dos A
    ```
 
 4. **Acessar a interface**:
-   - Abrir http://localhost:5000 no navegador
+   - Abrir http://localhost:9342 no navegador
 
 ## Exemplos de Perguntas
 
