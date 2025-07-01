@@ -2,7 +2,10 @@ langchain
 langchain-neo4j
 langchain-google-genai
 langchain-core
+langchain-community
 python-dotenv
 neo4j
 flask
 flask-cors
+openai
+numpy
